@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
+import { Poppins } from "next/font/google";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
@@ -67,12 +68,20 @@ const config = createConfig({
 
 const client = new QueryClient();
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={client}>
         <RainbowKitProvider>
-          <Component {...pageProps} />
+          <main className={`${poppins.variable} font-poppins`}>
+            <Component {...pageProps} />
+          </main>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
