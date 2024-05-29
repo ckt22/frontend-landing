@@ -49,7 +49,7 @@ const Home: NextPage = () => {
                 <div
                   role="button"
                   onClick={() => push("/create")}
-                  className="rounded-xl border-solid border-4 border-black text-left px-3 my-3 py-5"
+                  className="rounded-xl border-4 border-black border-dashed text-left px-3 my-3 py-5"
                 >
                   <h3>+ Create new event</h3>
                 </div>
