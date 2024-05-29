@@ -12,17 +12,27 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div>
+      <NextHead>
+        <title>Be Right There</title>
+        <meta
+          content="Be Right There - a DeFi app for making everyone on time."
+          name="description"
+        />
+      </NextHead>
       {/* HEADER */}
       <div className="px-3 py-4 flex items-center">
         <span>Be Right There</span>
         {isConnected ? (
           <div className="ml-auto">
-            <ConnectButton />
+            <ConnectButton
+              accountStatus={{ smallScreen: "avatar", largeScreen: "full" }}
+              chainStatus={{ smallScreen: "none", largeScreen: "full" }}
+            />
           </div>
         ) : null}
       </div>
 
-      <div className="flex items-center justify-center flex-col text-center min-h-[86vh]">
+      <div className="flex items-center justify-start flex-col text-center min-h-[86vh]">
         {isConnected ? (
           <div>{children}</div>
         ) : (
