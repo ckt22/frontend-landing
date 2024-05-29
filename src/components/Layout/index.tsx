@@ -13,7 +13,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div>
       {/* HEADER */}
-      <div className="px-3 py-4 flex">
+      <div className="px-3 py-4 flex items-center">
         <span>Be Right There</span>
         {isConnected ? (
           <div className="ml-auto">
