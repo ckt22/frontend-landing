@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Layout from "../components/Layout";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { differenceInCalendarDays } from "date-fns";
 
 const Home: NextPage = () => {
   const [currentTab, setCurrentTab] = useState("upcoming");
@@ -26,6 +27,8 @@ const Home: NextPage = () => {
     },
   ];
 
+  console.log(new Date(2024, 6, 1));
+
   return (
     <Layout>
       <div>
@@ -34,14 +37,14 @@ const Home: NextPage = () => {
           {tabs.map((tab, index) => (
             <button
               key={tab.value}
-              className="bg-gray-100 px-3 py-2 rounded-full mr-2 min-w-[100px]"
+              className="bg-gray-100 px-3 py-2 rounded-full mr-2 md:min-w-[100px]"
               onClick={() => setCurrentTab(tab.value)}
             >
               {tab.label}
             </button>
           ))}
           {/* CONTENT */}
-          <div className="mt-5 w-[700px] text-left">
+          <div className="mt-5 w-full max-sm:px-3 md:w-[700px] text-left">
             {/* UPCOMING */}
             {currentTab === "upcoming" && (
               <div>
@@ -57,9 +60,22 @@ const Home: NextPage = () => {
                 <div className="rounded-xl border-solid border-4 border-black text-left px-3 py-5">
                   <div className="flex">
                     <h3 className="font-bold text-2xl">Hackathon Submission</h3>
-                    <span className="ml-auto">01/06/2024 (in 5 days)</span>
+                    <span className="ml-auto">
+                      01/06/2024 (in{" "}
+                      {differenceInCalendarDays(
+                        new Date("2024-06-01"),
+                        new Date()
+                      )}
+                      days)
+                    </span>
                   </div>
-                  <div>3 members</div>
+                  <div className="mt-5">
+                    <span
+                      className={`bg-black text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
+                    >
+                      Chainlink
+                    </span>
+                  </div>
                 </div>
               </div>
             )}
@@ -74,7 +90,7 @@ const Home: NextPage = () => {
                     <h3 className="font-bold text-2xl">Poker Night</h3>
                     <span className="ml-auto">15/05/2024</span>
                   </div>
-                  <div>10 members</div>
+                  <div>Everyone was on time!</div>
                 </div>
               </div>
             )}
@@ -89,7 +105,14 @@ const Home: NextPage = () => {
                     <h3 className="font-bold text-2xl">S2O Vancouver</h3>
                     <span className="ml-auto">17/07/2024</span>
                   </div>
-                  <div>15 members</div>
+                  <div>Location: Vancouver</div>
+                  <div className="mt-5">
+                    <span
+                      className={`bg-black text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
+                    >
+                      Vote
+                    </span>
+                  </div>
                 </div>
               </div>
             )}
