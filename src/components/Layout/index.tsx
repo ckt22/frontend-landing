@@ -1,5 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NextHead from "next/head";
+import Image from "next/image";
 import { ReactNode } from "react";
 import { useAccount } from "wagmi";
 
@@ -21,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
       </NextHead>
       {/* HEADER */}
       <div className="px-3 py-4 flex items-center">
-        <span>Be Right There</span>
+        <Image src="/brt-logo.jpeg" height={35} width={120} alt="logo" />
         {isConnected ? (
           <div className="ml-auto">
             <ConnectButton

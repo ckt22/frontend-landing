@@ -35,16 +35,30 @@ export default function CreatePage() {
     <Layout>
       <div className="flex">
         <button
-          className="py-2 border-b-2 border-solid border-black px-0"
+          className="py-1 border-b-2 border-solid border-black px-0 flex"
           onClick={() => push("/")}
         >
-          Back
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+            />
+          </svg>
+          <span className="mx-1">Back to Upcoming</span>
         </button>
       </div>
 
       <div className="text-left">
         <h1 className="text-4xl font-extrabold my-3">Create</h1>
-        <div className="border-4 border-solid border-black flex flex-col p-4 w-[850px] text-left">
+        <div className="border-4 border-solid border-black rounded-xl flex flex-col p-4 w-full md:w-[850px] text-left">
           <label htmlFor="name">Name</label>
           <input
             className="border-2 border-solid border-black rounded-md my-3 p-2"
