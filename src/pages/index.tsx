@@ -2,9 +2,9 @@ import type { NextPage } from "next";
 import Layout from "../components/Layout";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { differenceInCalendarDays } from "date-fns";
 import PendingEventsList from "../components/PendingEventsList";
 import UpcomingEventsList from "../components/UpcomingEventsList";
+import Pnl from "../components/Pnl";
 
 const Home: NextPage = () => {
   const [currentTab, setCurrentTab] = useState("upcoming");
@@ -63,18 +63,7 @@ const Home: NextPage = () => {
               </div>
             )}
             {currentTab === "invites" && <PendingEventsList />}
-            {currentTab === "pnl" && (
-              <div className="">
-                <h2 className="text-4xl font-extrabold mb-5 text-black">P&L</h2>
-                {/* MAP ALL INVITES */}
-                <div className="rounded-xl border-solid border-4 border-gray-300 text-left px-3 py-5">
-                  <p>
-                    <span className="font-bold">Kit</span> has been late for
-                    total 69 minutes
-                  </p>
-                </div>
-              </div>
-            )}
+            {currentTab === "pnl" && <Pnl />}
           </div>
         </div>
       </div>

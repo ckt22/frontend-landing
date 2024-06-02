@@ -623,6 +623,44 @@ export const abi = [
         name: "_user",
         type: "address",
       },
+    ],
+    name: "getUserClaimed",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "getUserContribution",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
       {
         internalType: "bool",
         name: "isEnded",
@@ -744,6 +782,25 @@ export const abi = [
     inputs: [
       {
         internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "getUserPenalties",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "_token",
         type: "address",
       },
@@ -808,6 +865,25 @@ export const abi = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "_eventIds",
+        type: "uint256[]",
+      },
+    ],
+    name: "isValidationReady",
+    outputs: [
+      {
+        internalType: "bool[]",
+        name: "",
+        type: "bool[]",
       },
     ],
     stateMutability: "view",
@@ -953,6 +1029,63 @@ export const abi = [
       },
     ],
     name: "userClaimableAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "userTotalClaimed",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "userTotalContribution",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "userTotalPenalties",
     outputs: [
       {
         internalType: "uint256",
