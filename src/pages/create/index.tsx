@@ -109,7 +109,9 @@ export default function CreatePage() {
             type="datetime-local"
             onChange={(e) => setValues({ ...values, date: e.target.value })}
           />
-          <label htmlFor="members">Members</label>
+          <label htmlFor="members">
+            Members (Paste your own address if not found)
+          </label>
           <CreatableSelect
             isMulti
             name="members"
