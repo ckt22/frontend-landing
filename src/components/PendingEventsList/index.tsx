@@ -99,7 +99,9 @@ export default function PendingEventsList() {
             Commitment: $
             {(Number(event.commitmentRequired) / 10 ** 18).toString()}
           </div>
-          <div>Penalty: ${Number(event.penaltyRequired)}</div>
+          <div>
+            Penalty: ${(Number(event.penaltyRequired) / 10 ** 18).toString()}
+          </div>
           {/* <div className="mt-5">
             <span
               className={`bg-black text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
