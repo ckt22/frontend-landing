@@ -1,11 +1,15 @@
 import { useState } from "react";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
+import Select from "react-select";
+import PlaceAutocomplete from "../../components/LocationSelect";
 
 interface ValueProps {
   name: string;
   date: string;
   verfication: string[];
+  location: any;
+  deposit: string;
 }
 
 export default function CreatePage() {
@@ -14,6 +18,8 @@ export default function CreatePage() {
     name: "",
     date: "",
     verfication: [],
+    location: {},
+    deposit: "0",
   });
 
   const verficationMethods = [
@@ -59,7 +65,7 @@ export default function CreatePage() {
       <div className="text-left">
         <h1 className="text-4xl font-extrabold my-3">Create</h1>
         <div className="border-4 border-solid border-black rounded-xl flex flex-col p-4 w-full md:w-[850px] text-left">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Event Name</label>
           <input
             className="border-2 border-solid border-black rounded-md my-3 p-2"
             type="text"
@@ -71,7 +77,49 @@ export default function CreatePage() {
             type="datetime-local"
             onChange={(e) => setValues({ ...values, date: e.target.value })}
           />
-          <label htmlFor="date">Verfication</label>
+          <label htmlFor="members">Members</label>
+          <Select
+            isMulti
+            name="members"
+            classNames={{
+              control: () => "border-none bg-transparent text-black",
+            }}
+            options={[
+              {
+                label: "ckt22",
+                value: "0x533E173BDb9f76560d556B17ff275225f4170E53",
+              },
+              {
+                label: "zfrankie",
+                value: "1234",
+              },
+              {
+                label: "0xkmg",
+                value: "346",
+              },
+            ]}
+            className="border-2 border-solid border-black rounded-md my-3"
+          />
+          <label htmlFor="location">Location</label>
+          <PlaceAutocomplete
+            onPlaceSelect={(place) =>
+              setValues({
+                ...values,
+                location: {
+                  lat: place?.geometry?.location?.lat(),
+                  lng: place?.geometry?.location?.lng(),
+                },
+              })
+            }
+          />
+          <label htmlFor="deposit">Deposit</label>
+          <input
+            className="border-2 border-solid border-black rounded-md my-3 p-2"
+            type="string"
+            onChange={(e) => setValues({ ...values, deposit: e.target.value })}
+          />
+
+          {/* <label htmlFor="date">Verfication</label>
           <div className="flex mb-3">
             {verficationMethods.map((tab, index) => (
               <button
@@ -100,7 +148,7 @@ export default function CreatePage() {
                 {tab.label}
               </button>
             ))}
-          </div>
+          </div> */}
 
           <button
             className="bg-black text-white border-2 border-solid border-black rounded-full py-2"

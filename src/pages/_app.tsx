@@ -11,6 +11,7 @@ import {
   mainnet,
   optimism,
   polygon,
+  scrollSepolia,
   sepolia,
 } from "wagmi/chains";
 import { connectorsForWallets } from "@rainbow-me/rainbowkit";
@@ -23,6 +24,7 @@ import {
 import { createConfig } from "wagmi";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { createClient, http } from "viem";
+import { APIProvider } from "@vis.gl/react-google-maps";
 
 const defaultConfig = getDefaultConfig({
   appName: "RainbowKit demo",
@@ -55,14 +57,7 @@ const config = createConfig({
   client({ chain }) {
     return createClient({ chain, transport: http() });
   },
-  chains: [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [sepolia] : []),
-  ],
+  chains: [mainnet, scrollSepolia],
   ssr: true,
 });
 
@@ -77,13 +72,18 @@ const poppins = Poppins({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
-      <QueryClientProvider client={client}>
-        <RainbowKitProvider>
-          <main className={`${poppins.variable} font-poppins`}>
-            <Component {...pageProps} />
-          </main>
-        </RainbowKitProvider>
-      </QueryClientProvider>
+      <APIProvider
+        apiKey={"AIzaSyAQ2wimOQEBYPSRL_OH1hd4UHG9irSyj_Y"}
+        solutionChannel="GMP_devsite_samples_v3_rgmautocomplete"
+      >
+        <QueryClientProvider client={client}>
+          <RainbowKitProvider>
+            <main className={`${poppins.variable} font-poppins`}>
+              <Component {...pageProps} />
+            </main>
+          </RainbowKitProvider>
+        </QueryClientProvider>
+      </APIProvider>
     </WagmiProvider>
   );
 }

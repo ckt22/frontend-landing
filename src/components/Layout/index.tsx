@@ -37,8 +37,8 @@ export default function Layout({ children }: LayoutProps) {
         {isConnected ? (
           <div>{children}</div>
         ) : (
-          <div>
-            <p>Start your journey by connecting your wallet</p>
+          <div className="flex flex-col items-center justify-center">
+            <p className="my-5">Start your journey by connecting your wallet</p>
             <ConnectButton />
           </div>
         )}
