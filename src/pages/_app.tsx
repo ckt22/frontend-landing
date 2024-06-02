@@ -57,7 +57,7 @@ const config = createConfig({
   client({ chain }) {
     return createClient({ chain, transport: http() });
   },
-  chains: [mainnet, scrollSepolia],
+  chains: [scrollSepolia],
   ssr: true,
 });
 

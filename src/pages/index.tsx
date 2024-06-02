@@ -27,8 +27,6 @@ const Home: NextPage = () => {
     },
   ];
 
-  console.log(new Date(2024, 6, 1));
-
   return (
     <Layout>
       <div>

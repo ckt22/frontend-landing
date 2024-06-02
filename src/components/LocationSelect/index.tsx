@@ -25,16 +25,13 @@ const PlaceAutocomplete = ({ onPlaceSelect }: PlaceAutocompleteProps) => {
   useEffect(() => {
     if (!placeAutocomplete) return;
 
-    console.log("chaning places");
-
     placeAutocomplete.addListener("place_changed", () => {
-      console.log(placeAutocomplete.getPlace());
       onPlaceSelect(placeAutocomplete.getPlace());
     });
   }, [onPlaceSelect, placeAutocomplete]);
 
   return (
-    <div className="autocomplete-container mb-5">
+    <div className="autocomplete-container">
       <input
         className="py-2 px-2 border-2 border-solid border-black w-full rounded-md my-3"
         ref={inputRef}

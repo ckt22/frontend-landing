@@ -1,6 +1,7 @@
 {
   "name": "frontend-landing",
   "private": true,
+  "module": "esnext",
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev -p 3069",
