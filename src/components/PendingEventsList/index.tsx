@@ -96,7 +96,7 @@ export default function PendingEventsList() {
                 try {
                   // accept event
                   const account = await walletClient.getAddresses();
-
+                  console.log("ok");
                   // approve spending
                   //                   const { request: approval } = await publicClient.simulateContract({
                   //                     address: "0xf8Bc58f8aef773aBBA1019E8aA048fc5AF876a38",
