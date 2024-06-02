@@ -98,19 +98,19 @@ export default function PendingEventsList() {
                   const account = await walletClient.getAddresses();
 
                   // approve spending
-                  const { request: approval } = await publicClient.simulateContract({
-                    address: "0xf8Bc58f8aef773aBBA1019E8aA048fc5AF876a38",
-                    abi: mockTokenAbi,
-                    functionName: "approve",
-                    args: [
-                      "0xadd81d4F68AB0420EdA840cFbc07Ff2d6fd708F1",
-                      parseEther(event.commitmentRequired.toString()),
-                    ],
-                    account: account[0],
-                  });
-                  await walletClient.writeContract(approval);
-
-                  console.log("ready to accept", event.eventId);
+                  //                   const { request: approval } = await publicClient.simulateContract({
+                  //                     address: "0xf8Bc58f8aef773aBBA1019E8aA048fc5AF876a38",
+                  //                     abi: mockTokenAbi,
+                  //                     functionName: "approve",
+                  //                     args: [
+                  //                       "0xadd81d4F68AB0420EdA840cFbc07Ff2d6fd708F1",
+                  //                       parseEther(event.commitmentRequired.toString()),
+                  //                     ],
+                  //                     account: account[0],
+                  //                   });
+                  //                   await walletClient.writeContract(approval);
+                  //
+                  //                   console.log("ready to accept", event.eventId);
 
                   // accept event
                   const { request: accept } = await publicClient.simulateContract({
