@@ -65,7 +65,7 @@ export default function PendingEventsList() {
 
       setEvents(
         (data as any).sort(
-          (a, b) => Number(a.arrivalTime) - Number(b.arrivalTime)
+          (a: any, b: any) => Number(a.arrivalTime) - Number(b.arrivalTime)
         )
       );
     }
