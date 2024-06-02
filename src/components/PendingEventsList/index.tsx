@@ -45,7 +45,7 @@ export default function PendingEventsList() {
       for (let evt of data as any) {
         const { location } = evt;
 
-        const decodedCoordinates = await publicClient.readContract({
+        const decodedCoordinates: any = await publicClient.readContract({
           address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
           abi: abi,
           functionName: "decodeCoordinates",
@@ -55,9 +55,9 @@ export default function PendingEventsList() {
         const { data } = await axios.get(
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
             Number(decodedCoordinates[0]) / 1000000
-          },${
-            Number(decodedCoordinates[1]) / 1000000
-          }&key=${process.env.GOOGLE_MAPS_API_KEY}`
+          },${Number(decodedCoordinates[1]) / 1000000}&key=${
+            process.env.GOOGLE_MAPS_API_KEY
+          }`
         );
 
         evt.address = data.results[0].formatted_address;
