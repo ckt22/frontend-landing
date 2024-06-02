@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
-import Select from "react-select";
 import { toast } from "react-toastify";
 import PlaceAutocomplete from "../../components/LocationSelect";
 import { publicClient } from "../../contracts/config";
 import { mockTokenAbi } from "../../contracts/mockTokenAbi";
 import { abi } from "../../contracts/abi";
+import CreatableSelect from "react-select/creatable";
 import { createWalletClient, custom, parseEther } from "viem";
 import { scrollSepolia } from "viem/chains";
 
@@ -15,6 +15,7 @@ interface ValueProps {
   deadline: string;
   date: string;
   verfication: string[];
+  members: string[];
   location: any;
   commitment: string;
   penalty: string;
@@ -26,6 +27,7 @@ export default function CreatePage() {
     name: "",
     deadline: "",
     date: "",
+    members: [],
     verfication: [],
     location: {},
     commitment: "0",
@@ -88,7 +90,7 @@ export default function CreatePage() {
 
       <div className="text-left">
         <h1 className="text-4xl font-extrabold my-3">Create</h1>
-        <div className="border-4 border-solid border-black rounded-xl flex flex-col p-4 w-full md:w-[850px] text-left">
+        <div className="border-4 border-solid border-black rounded-xl flex flex-col p-4 w-[92vw] md:w-[800px] text-left">
           <label htmlFor="name">Event Name</label>
           <input
             className="border-2 border-solid border-black rounded-md my-3 p-2"
@@ -108,7 +110,7 @@ export default function CreatePage() {
             onChange={(e) => setValues({ ...values, date: e.target.value })}
           />
           <label htmlFor="members">Members</label>
-          <Select
+          <CreatableSelect
             isMulti
             name="members"
             classNames={{
@@ -116,18 +118,25 @@ export default function CreatePage() {
             }}
             options={[
               {
-                label: "ckt22",
-                value: "0x533E173BDb9f76560d556B17ff275225f4170E53",
+                label: "Winson",
+                value: "0xadd81d4F68AB0420EdA840cFbc07Ff2d6fd708F1",
               },
               {
-                label: "zfrankie",
-                value: "1234",
+                label: "Kit",
+                value: "0x764580ab307e0c6ee032b467d212dae7690b1424",
               },
               {
-                label: "0xkmg",
-                value: "0xb0b25f21377e69fcf5d54ebd9ec9f9bca9938939",
+                label: "Frankie",
+                value: "0x8fa77bbece6f2654d65c268b7dd636998ccb9576",
+              },
+              {
+                label: "Roger",
+                value: "0x33e3f1a34bf0bac3620f2bd4334b23fde1423831",
               },
             ]}
+            onChange={(e) =>
+              setValues({ ...values, members: e.map((e) => e.value) })
+            }
             className="border-2 border-solid border-black rounded-md my-3"
           />
           <label htmlFor="location">Location</label>
@@ -142,7 +151,9 @@ export default function CreatePage() {
               })
             }
           />
-          <label htmlFor="committment">commitment</label>
+          <label htmlFor="committment">
+            Commitment (Amount to be paid by each party)
+          </label>
           <input
             className="border-2 border-solid border-black rounded-md my-3 p-2"
             type="string"
@@ -230,12 +241,7 @@ export default function CreatePage() {
                     parseEther(values.commitment),
                     parseEther(values.penalty),
                     encodedCoordinates,
-                    [
-                      "0xadd81d4f68ab0420eda840cfbc07ff2d6fd708f1",
-                      "0x8fa77bbece6f2654d65c268b7dd636998ccb9576",
-                      "0x764580ab307e0c6ee032b467d212dae7690b1424",
-                      "0x33e3f1a34bf0bac3620f2bd4334b23fde1423831",
-                    ],
+                    values.members,
                   ],
                   account: account[0],
                 });

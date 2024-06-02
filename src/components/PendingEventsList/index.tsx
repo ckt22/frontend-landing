@@ -63,6 +63,8 @@ export default function PendingEventsList() {
         evt.address = data.results[0].formatted_address;
       }
 
+      console.log(data);
+
       setEvents(
         (data as any).sort(
           (a: any, b: any) => Number(a.arrivalTime) - Number(b.arrivalTime)
@@ -81,9 +83,9 @@ export default function PendingEventsList() {
       {events.map((event: any, index: number) => (
         <div
           key={`pending_${index}`}
-          className="rounded-xl border-solid border-4 border-gray-300 text-left px-3 py-5 mb-3"
+          className="rounded-xl border-solid border-4 border-black text-left px-3 py-5 mb-3"
         >
-          <div className="flex">
+          <div className="flex items-center">
             <h3 className="font-bold text-2xl">{event.name}</h3>
             <span className="ml-auto">
               {format(
@@ -93,8 +95,11 @@ export default function PendingEventsList() {
             </span>
           </div>
           <div>Location: {event.address}</div>
-          <div>Commitment: {Number(event.totalCommitment).toString()}</div>
-          <div>Penalty: {Number(event.penalties)}</div>
+          <div>
+            Commitment: $
+            {(Number(event.commitmentRequired) / 10 ** 18).toString()}
+          </div>
+          <div>Penalty: ${Number(event.penaltyRequired)}</div>
           {/* <div className="mt-5">
             <span
               className={`bg-black text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
@@ -146,7 +151,7 @@ export default function PendingEventsList() {
                   });
                 }
               }}
-              className="ml-auto"
+              className="ml-auto bg-black text-white px-3 py-1 rounded-lg"
             >
               ✅ Accept
             </button>

@@ -122,7 +122,7 @@ export default function UpcomingEventsList() {
               }}
               className={`ml-auto bg-black disabled:bg-gray-300 text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
             >
-              Verify
+              Verify Location
             </button>
           </div>
         </div>
