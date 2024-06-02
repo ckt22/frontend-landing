@@ -111,6 +111,9 @@ const Home: NextPage = () => {
                       Vote
                     </span>
                   </div>
+                  <div className="mt-5 w-full flex">
+                    <button className="ml-auto">✅ Accept</button>
+                  </div>
                 </div>
               </div>
             )}

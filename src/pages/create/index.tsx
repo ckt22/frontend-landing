@@ -216,21 +216,8 @@ export default function CreatePage() {
               );
               await walletClient.writeContract(approval);
 
-              console.log(
-                values.name,
-                new Date(values.deadline).getTime(),
-                new Date(values.date).getTime(),
-                parseEther(values.committment),
-                parseEther(values.penalty),
-                encodedCoordinates,
-                [
-                  "0xadd81d4F68AB0420EdA840cFbc07Ff2d6fd708F1",
-                  "0x533E173BDb9f76560d556B17ff275225f4170E53",
-                ]
-              );
-
               const { request } = await publicClient.simulateContract({
-                address: "0xadd81d4f68ab0420eda840cfbc07ff2d6fd708f1",
+                address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
                 abi: abi,
                 functionName: "createEvent",
                 args: [
@@ -241,8 +228,10 @@ export default function CreatePage() {
                   parseEther(values.penalty),
                   encodedCoordinates,
                   [
-                    "0xadd81d4F68AB0420EdA840cFbc07Ff2d6fd708F1",
-                    "0x533E173BDb9f76560d556B17ff275225f4170E53",
+                    "0xadd81d4f68ab0420eda840cfbc07ff2d6fd708f1",
+                    "0x8fa77bbece6f2654d65c268b7dd636998ccb9576",
+                    "0x764580ab307e0c6ee032b467d212dae7690b1424",
+                    "0x33e3f1a34bf0bac3620f2bd4334b23fde1423831",
                   ],
                 ],
                 account: account[0],
