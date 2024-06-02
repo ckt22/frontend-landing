@@ -57,13 +57,17 @@ export default function PendingEventsList() {
             Number(decodedCoordinates[0]) / 1000000
           },${
             Number(decodedCoordinates[1]) / 1000000
-          }&key=AIzaSyAQ2wimOQEBYPSRL_OH1hd4UHG9irSyj_Y`
+          }&key=${process.env.GOOGLE_MAPS_API_KEY}`
         );
 
         evt.address = data.results[0].formatted_address;
       }
 
-      setEvents(data);
+      setEvents(
+        (data as any).sort(
+          (a, b) => Number(a.arrivalTime) - Number(b.arrivalTime)
+        )
+      );
     }
     getEvents();
   }, [walletClient]);

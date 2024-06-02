@@ -69,11 +69,13 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
+const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY || "";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <APIProvider
-        apiKey={"AIzaSyAQ2wimOQEBYPSRL_OH1hd4UHG9irSyj_Y"}
+        apiKey={googleMapsApiKey}
         solutionChannel="GMP_devsite_samples_v3_rgmautocomplete"
       >
         <QueryClientProvider client={client}>

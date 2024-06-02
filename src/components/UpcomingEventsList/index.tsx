@@ -4,7 +4,7 @@ import { scrollSepolia } from "viem/chains";
 import axios from "axios";
 import { publicClient } from "../../contracts/config";
 import { abi } from "../../contracts/abi";
-import { differenceInCalendarDays, format } from "date-fns";
+import { differenceInMinutes, format } from "date-fns";
 import { useRouter } from "next/router";
 
 export default function UpcomingEventsList() {
@@ -55,15 +55,19 @@ export default function UpcomingEventsList() {
         const { data } = await axios.get(
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
             Number(decodedCoordinates[0]) / 1000000
-          },${
-            Number(decodedCoordinates[1]) / 1000000
-          }&key=AIzaSyAQ2wimOQEBYPSRL_OH1hd4UHG9irSyj_Y`
+          },${Number(decodedCoordinates[1]) / 1000000}&key=${
+            process.env.GOOGLE_MAPS_API_KEY
+          }`
         );
 
         evt.address = data.results[0].formatted_address;
       }
 
-      setEvents(data);
+      setEvents(
+        (data as any).sort(
+          (a, b) => Number(a.arrivalTime) - Number(b.arrivalTime)
+        )
+      );
     }
     getEvents();
   }, [walletClient]);
@@ -94,6 +98,21 @@ export default function UpcomingEventsList() {
             </span>
           </div>
           <div>Location: {event.address}</div>
+          <div className="mt-5 w-full flex">
+            <button
+              disabled={
+                Math.abs(
+                  differenceInMinutes(
+                    new Date(Number(event.arrivalTime)),
+                    new Date()
+                  )
+                ) > 10
+              }
+              className={`ml-auto bg-black disabled:bg-gray-300 text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
+            >
+              Verify
+            </button>
+          </div>
         </div>
       ))}
     </div>
