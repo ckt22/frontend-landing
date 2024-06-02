@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
 import Select from "react-select";
+import { toast } from "react-toastify";
 import PlaceAutocomplete from "../../components/LocationSelect";
 import { publicClient } from "../../contracts/config";
 import { mockTokenAbi } from "../../contracts/mockTokenAbi";
@@ -31,6 +32,7 @@ export default function CreatePage() {
     penalty: "0",
   });
   const [walletClient, setWalletClient] = useState<any>();
+  const [eventCreated, setEventCreated] = useState<boolean>(false);
 
   const verficationMethods = [
     {
@@ -188,55 +190,65 @@ export default function CreatePage() {
 
           <button
             className="bg-black text-white border-2 border-solid border-black rounded-full py-2"
+            disabled={eventCreated}
             onClick={async () => {
-              const account = await walletClient.getAddresses();
-              // encode coordinate
-              const encodedCoordinates = await publicClient.readContract({
-                address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
-                abi: abi,
-                functionName: "encodeCoordinates",
-                args: [
-                  (values.location.lat * 1000000).toFixed(),
-                  (values.location.lng * 1000000).toFixed(),
-                ],
-              });
-
-              // approve spending
-              const { request: approval } = await publicClient.simulateContract(
-                {
-                  address: "0xf8Bc58f8aef773aBBA1019E8aA048fc5AF876a38",
-                  abi: mockTokenAbi,
-                  functionName: "approve",
+              try {
+                const account = await walletClient.getAddresses();
+                // encode coordinate
+                const encodedCoordinates = await publicClient.readContract({
+                  address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
+                  abi: abi,
+                  functionName: "encodeCoordinates",
                   args: [
-                    "0xadd81d4F68AB0420EdA840cFbc07Ff2d6fd708F1",
+                    (values.location.lat * 1000000).toFixed(),
+                    (values.location.lng * 1000000).toFixed(),
+                  ],
+                });
+
+                // approve spending
+                const { request: approval } =
+                  await publicClient.simulateContract({
+                    address: "0xf8Bc58f8aef773aBBA1019E8aA048fc5AF876a38",
+                    abi: mockTokenAbi,
+                    functionName: "approve",
+                    args: [
+                      "0xadd81d4F68AB0420EdA840cFbc07Ff2d6fd708F1",
+                      parseEther(values.committment),
+                    ],
+                    account: account[0],
+                  });
+                await walletClient.writeContract(approval);
+
+                const { request } = await publicClient.simulateContract({
+                  address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
+                  abi: abi,
+                  functionName: "createEvent",
+                  args: [
+                    values.name,
+                    new Date(values.deadline).getTime(),
+                    new Date(values.date).getTime(),
                     parseEther(values.committment),
+                    parseEther(values.penalty),
+                    encodedCoordinates,
+                    [
+                      "0xadd81d4f68ab0420eda840cfbc07ff2d6fd708f1",
+                      "0x8fa77bbece6f2654d65c268b7dd636998ccb9576",
+                      "0x764580ab307e0c6ee032b467d212dae7690b1424",
+                      "0x33e3f1a34bf0bac3620f2bd4334b23fde1423831",
+                    ],
                   ],
                   account: account[0],
-                }
-              );
-              await walletClient.writeContract(approval);
+                });
+                await walletClient.writeContract(request);
 
-              const { request } = await publicClient.simulateContract({
-                address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
-                abi: abi,
-                functionName: "createEvent",
-                args: [
-                  values.name,
-                  new Date(values.deadline).getTime(),
-                  new Date(values.date).getTime(),
-                  parseEther(values.committment),
-                  parseEther(values.penalty),
-                  encodedCoordinates,
-                  [
-                    "0xadd81d4f68ab0420eda840cfbc07ff2d6fd708f1",
-                    "0x8fa77bbece6f2654d65c268b7dd636998ccb9576",
-                    "0x764580ab307e0c6ee032b467d212dae7690b1424",
-                    "0x33e3f1a34bf0bac3620f2bd4334b23fde1423831",
-                  ],
-                ],
-                account: account[0],
-              });
-              await walletClient.writeContract(request);
+                toast.success("Event created.", { autoClose: 3000 });
+
+                setEventCreated(true);
+              } catch (e) {
+                toast.error("Something went wrong. Please try again.", {
+                  autoClose: 3000,
+                });
+              }
             }}
           >
             Create

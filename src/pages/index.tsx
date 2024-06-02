@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { differenceInCalendarDays } from "date-fns";
+import PendingEventsList from "../components/PendingEventsList";
 
 const Home: NextPage = () => {
   const [currentTab, setCurrentTab] = useState("upcoming");
@@ -92,31 +93,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             )}
-            {currentTab === "invites" && (
-              <div className="">
-                <h2 className="text-4xl font-extrabold mb-5 text-black">
-                  Pending Invites
-                </h2>
-                {/* MAP ALL INVITES */}
-                <div className="rounded-xl border-solid border-4 border-gray-300 text-left px-3 py-5">
-                  <div className="flex">
-                    <h3 className="font-bold text-2xl">S2O Vancouver</h3>
-                    <span className="ml-auto">17/07/2024</span>
-                  </div>
-                  <div>Location: Vancouver</div>
-                  <div className="mt-5">
-                    <span
-                      className={`bg-black text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
-                    >
-                      Vote
-                    </span>
-                  </div>
-                  <div className="mt-5 w-full flex">
-                    <button className="ml-auto">✅ Accept</button>
-                  </div>
-                </div>
-              </div>
-            )}
+            {currentTab === "invites" && <PendingEventsList />}
             {currentTab === "pnl" && (
               <div className="">
                 <h2 className="text-4xl font-extrabold mb-5 text-black">P&L</h2>
