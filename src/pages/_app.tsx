@@ -69,7 +69,7 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-const googleMapsApiKey = process.env.GOOGLE_MAPS_API_KEY || "";
+const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -56,7 +56,7 @@ export default function PendingEventsList() {
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
             Number(decodedCoordinates[0]) / 1000000
           },${Number(decodedCoordinates[1]) / 1000000}&key=${
-            process.env.GOOGLE_MAPS_API_KEY
+            process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
           }`
         );
 
