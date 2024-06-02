@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { differenceInCalendarDays } from "date-fns";
 import PendingEventsList from "../components/PendingEventsList";
+import UpcomingEventsList from "../components/UpcomingEventsList";
 
 const Home: NextPage = () => {
   const [currentTab, setCurrentTab] = useState("upcoming");
@@ -45,39 +46,7 @@ const Home: NextPage = () => {
           {/* CONTENT */}
           <div className="mt-5 w-full max-sm:px-3 md:w-[700px] text-left">
             {/* UPCOMING */}
-            {currentTab === "upcoming" && (
-              <div>
-                <h2 className="text-4xl font-extrabold mb-5">Upcoming Bets</h2>
-                <div
-                  role="button"
-                  onClick={() => push("/create")}
-                  className="rounded-xl border-4 border-black border-dashed text-left px-3 my-3 py-5"
-                >
-                  <h3>+ Create new event</h3>
-                </div>
-                {/* MAP ALL UPCOMING HAPPENINGS */}
-                <div className="rounded-xl border-solid border-4 border-black text-left px-3 py-5">
-                  <div className="flex">
-                    <h3 className="font-bold text-2xl">Hackathon Submission</h3>
-                    <span className="ml-auto">
-                      01/06/2024 (in{" "}
-                      {differenceInCalendarDays(
-                        new Date("2024-06-01"),
-                        new Date()
-                      )}
-                      days)
-                    </span>
-                  </div>
-                  <div className="mt-5">
-                    <span
-                      className={`bg-black text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
-                    >
-                      Chainlink
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
+            {currentTab === "upcoming" && <UpcomingEventsList />}
             {currentTab === "past" && (
               <div className="text-gray-300">
                 <h2 className="text-4xl font-extrabold mb-5 text-black">

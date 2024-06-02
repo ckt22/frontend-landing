@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { createWalletClient, custom } from "viem";
 import { scrollSepolia } from "viem/chains";
+import axios from "axios";
 import { publicClient } from "../../contracts/config";
 import { abi } from "../../contracts/abi";
+import { differenceInCalendarDays, format } from "date-fns";
+import { useRouter } from "next/router";
 
 export default function UpcomingEventsList() {
+  const { push } = useRouter();
   const [events, setEvents] = useState<any>([]);
   const [walletClient, setWalletClient] = useState<any>();
 
@@ -33,14 +37,65 @@ export default function UpcomingEventsList() {
       const data = await publicClient.readContract({
         address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
         abi: abi,
-        functionName: "getInvitedEvents",
-        args: [account[0]],
+        functionName: "getUserEvents",
+        args: [account[0], false, true],
       });
 
-      console.log(data);
+      // get location
+      for (let evt of data as any) {
+        const { location } = evt;
+
+        const decodedCoordinates = await publicClient.readContract({
+          address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
+          abi: abi,
+          functionName: "decodeCoordinates",
+          args: [location],
+        });
+
+        const { data } = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
+            Number(decodedCoordinates[0]) / 1000000
+          },${
+            Number(decodedCoordinates[1]) / 1000000
+          }&key=AIzaSyAQ2wimOQEBYPSRL_OH1hd4UHG9irSyj_Y`
+        );
+
+        evt.address = data.results[0].formatted_address;
+      }
+
+      setEvents(data);
     }
     getEvents();
   }, [walletClient]);
 
-  return <div></div>;
+  return (
+    <div>
+      <h2 className="text-4xl font-extrabold mb-5">Upcoming Bets</h2>
+      <div
+        role="button"
+        onClick={() => push("/create")}
+        className="rounded-xl border-4 border-black border-dashed text-left px-3 my-3 py-5"
+      >
+        <h3>+ Create new event</h3>
+      </div>
+      {/* MAP ALL UPCOMING HAPPENINGS */}
+      {events.map((event: any, index: number) => (
+        <div
+          key={`upcoming_${index}`}
+          className="rounded-xl border-solid border-4 border-black text-left px-3 py-5 mb-3"
+        >
+          <div className="flex">
+            <h3 className="font-bold text-2xl">{event.name}</h3>
+            <span className="ml-auto">
+              {format(
+                new Date(Number(event.arrivalTime)),
+                "yyyy-MM-dd (HH:mm)"
+              )}
+            </span>
+          </div>
+          <div>Location: {event.address}</div>
+        </div>
+      ))}
+    </div>
+  );
 }

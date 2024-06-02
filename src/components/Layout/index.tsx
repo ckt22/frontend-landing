@@ -2,6 +2,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NextHead from "next/head";
 import Image from "next/image";
 import { ReactNode } from "react";
+import { Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useAccount } from "wagmi";
 
 interface LayoutProps {
@@ -49,6 +51,19 @@ export default function Layout({ children }: LayoutProps) {
           Kayaga Web3 🌈
         </a>
       </footer>
+
+      <ToastContainer
+        position="top-right"
+        transition={Slide}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

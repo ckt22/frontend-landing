@@ -16,7 +16,7 @@ interface ValueProps {
   date: string;
   verfication: string[];
   location: any;
-  committment: string;
+  commitment: string;
   penalty: string;
 }
 
@@ -28,7 +28,7 @@ export default function CreatePage() {
     date: "",
     verfication: [],
     location: {},
-    committment: "0",
+    commitment: "0",
     penalty: "0",
   });
   const [walletClient, setWalletClient] = useState<any>();
@@ -142,12 +142,12 @@ export default function CreatePage() {
               })
             }
           />
-          <label htmlFor="committment">Committment</label>
+          <label htmlFor="committment">commitment</label>
           <input
             className="border-2 border-solid border-black rounded-md my-3 p-2"
             type="string"
             onChange={(e) =>
-              setValues({ ...values, committment: e.target.value })
+              setValues({ ...values, commitment: e.target.value })
             }
           />
           <label htmlFor="penalty">Penalty</label>
@@ -213,7 +213,7 @@ export default function CreatePage() {
                     functionName: "approve",
                     args: [
                       "0xadd81d4F68AB0420EdA840cFbc07Ff2d6fd708F1",
-                      parseEther(values.committment),
+                      parseEther(values.commitment),
                     ],
                     account: account[0],
                   });
@@ -227,7 +227,7 @@ export default function CreatePage() {
                     values.name,
                     new Date(values.deadline).getTime(),
                     new Date(values.date).getTime(),
-                    parseEther(values.committment),
+                    parseEther(values.commitment),
                     parseEther(values.penalty),
                     encodedCoordinates,
                     [
