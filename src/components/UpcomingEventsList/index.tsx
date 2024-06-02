@@ -45,7 +45,7 @@ export default function UpcomingEventsList() {
       for (let evt of data as any) {
         const { location } = evt;
 
-        const decodedCoordinates = await publicClient.readContract({
+        const decodedCoordinates: any = await publicClient.readContract({
           address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
           abi: abi,
           functionName: "decodeCoordinates",
@@ -54,8 +54,8 @@ export default function UpcomingEventsList() {
 
         const { data } = await axios.get(
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
-            Number(decodedCoordinates[0]) / 1000000
-          },${Number(decodedCoordinates[1]) / 1000000}&key=${
+            Number(decodedCoordinates[0] as bigint) / 1000000
+          },${Number(decodedCoordinates[1] as bigint) / 1000000}&key=${
             process.env.GOOGLE_MAPS_API_KEY
           }`
         );
@@ -65,7 +65,7 @@ export default function UpcomingEventsList() {
 
       setEvents(
         (data as any).sort(
-          (a, b) => Number(a.arrivalTime) - Number(b.arrivalTime)
+          (a: any, b: any) => Number(a.arrivalTime) - Number(b.arrivalTime)
         )
       );
     }
@@ -108,6 +108,18 @@ export default function UpcomingEventsList() {
                   )
                 ) > 10
               }
+              onClick={async () => {
+                const account = await walletClient.getAddresses();
+
+                const { request } = await publicClient.simulateContract({
+                  address: "0xfcc5aff8946Aa3A8015959Bc468255489FcaD241",
+                  abi: abi,
+                  functionName: "validateArrivalMock",
+                  args: [event.eventId, account[0]],
+                  account: account[0],
+                });
+                await walletClient.writeContract(request);
+              }}
               className={`ml-auto bg-black disabled:bg-gray-300 text-white px-4 py-1 rounded-full mr-2 min-w-[100px]`}
             >
               Verify
